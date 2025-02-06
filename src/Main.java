@@ -14,6 +14,7 @@ public class Main {
         User user2;
         User user3;
         User user4;
+        User user5;
         User inputUser;
 
         ArrayList<User> users = new ArrayList<User>();
@@ -60,6 +61,7 @@ public class Main {
             System.out.println("user not found");
         }
 
+        usertbl.deleteUser(21);
 
         dbCon.dbClose();
     }

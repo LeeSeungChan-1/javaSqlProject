@@ -64,15 +64,7 @@ public class UserTbl {
         this.ps.setString(4, user.getGrade());
         this.ps.setLong(5, user.getTblCompanyId());
         this.updateCount = this.ps.executeUpdate();
-//        this.updateCount = this.dbCon.getStmt().executeUpdate(
-//                "insert into tbl_user values (null, " +
-//                user.getIdNumber()     + ",  " +
-//                user.getPassword()     + ", '" +
-//                user.getName()         + "', " +
-//                user.getGrade()        + ",  " +
-//                user.getTblCompanyId() + ")"
-//        );
-        this.rs.close();
+
         return this.updateCount == 1;
     }
 
@@ -85,15 +77,15 @@ public class UserTbl {
         this.ps.setLong(4, user.getTblCompanyId());
         this.ps.setLong(5, user.getId());
         this.updateCount = this.ps.executeUpdate();
-//        this.updateCount = this.dbCon.getStmt().executeUpdate(
-//                "update tbl_user set password = '" + user.getPassword() + "', " +
-//                "name = '" + user.getName() + "', " +
-//                "grade = '" + user.getGrade() + "', " +
-//                "tbl_company_id = '" + user.getTblCompanyId() + "' " +
-//                "where id = " + user.getId()
-//        );
-        this.rs.close();
+
         return this.updateCount == 1;
     }
 
+    public boolean deleteUser(long id) throws SQLException {
+        this.sql = "delete from tbl_user where id = " + id;
+        this.ps = this.dbCon.getConn().prepareStatement(this.sql);
+        this.updateCount = this.ps.executeUpdate();
+
+        return this.updateCount == 1;
+    }
 }
