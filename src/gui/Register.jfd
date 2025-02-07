@@ -1,0 +1,100 @@
+JFDML JFormDesigner: "8.2.4.0.393" Java: "21.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "jfMain"
+			"preferredSize": new java.awt.Dimension( 400, 300 )
+			"title": "@등록"
+			"visible": true
+			"resizable": false
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+				"columns": 1
+			} ) {
+				name: "jpTop"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "jlTop"
+					"text": "@등록"
+					"horizontalAlignment": 0
+					"font": new java.awt.Font( "맑은 고딕", 0, 30 )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "North"
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+				"columns": 2
+				"rows": 6
+			} ) {
+				name: "jpMain"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "jlCode"
+					"text": "코드:"
+					"horizontalAlignment": 0
+					"font": &Font0 new java.awt.Font( "맑은 고딕", 0, 20 )
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "jtfCode"
+					"font": &Font1 new java.awt.Font( "맑은 고딕", 0, 20 )
+					"columns": 6
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "jlName"
+					"text": "이름:"
+					"horizontalAlignment": 0
+					"font": #Font0
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "jtfName"
+					"font": #Font1
+					"columns": 50
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "jlUnit"
+					"text": "단위:"
+					"horizontalAlignment": 0
+					"font": #Font0
+				} )
+				add( new FormComponent( "javax.swing.JComboBox" ) {
+					name: "jcbUnit"
+					"font": new java.awt.Font( "맑은 고딕", 0, 20 )
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "jlPrice"
+					"text": "가격:"
+					"horizontalAlignment": 0
+					"font": #Font0
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "jtfPrice"
+					"font": #Font1
+					"columns": 10
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "jlCompany"
+					"text": "회사:"
+					"horizontalAlignment": 0
+					"font": #Font0
+				} )
+				add( new FormComponent( "javax.swing.JComboBox" ) {
+					name: "jcbCompany"
+					"font": #Font1
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "blank"
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbSave"
+					"text": "저장"
+					"font": #Font1
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSave", true ) )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 400, 300 )
+		} )
+	}
+}

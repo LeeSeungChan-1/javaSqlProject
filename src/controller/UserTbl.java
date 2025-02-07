@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class UserTbl {
     private DBCon dbCon;
     private User user;
-    private ArrayList<User> users = new ArrayList<User>();
+    private ArrayList<User> users = new ArrayList<>();
     private ResultSet rs;
     private int updateCount;
     private String sql;
@@ -22,7 +22,7 @@ public class UserTbl {
         this.dbCon = dbCon;
     }
 
-    public ArrayList<User> findUserAll() throws SQLException {
+    public ArrayList<User> selectUserAll() throws SQLException {
         this.sql = "select * from tbl_user";
         this.rs = this.dbCon.getStmt().executeQuery(this.sql);
 
@@ -38,7 +38,7 @@ public class UserTbl {
         return this.users;
     }
 
-    public User findUserByID(long id) throws SQLException {
+    public User selectUserByID(long id) throws SQLException {
         this.sql = "select * from tbl_user where id = " + id;
         this.rs = this.dbCon.getStmt().executeQuery(this.sql);
 
@@ -55,7 +55,7 @@ public class UserTbl {
         return null;
     }
 
-    public boolean addUser(User user) throws SQLException {
+    public boolean insertUser(User user) throws SQLException {
         this.sql = "insert into tbl_user values(null, ?, ?, ?, ?, ?)";
         this.ps = this.dbCon.getConn().prepareStatement(this.sql);
         this.ps.setString(1, user.getIdNumber());
@@ -87,5 +87,22 @@ public class UserTbl {
         this.updateCount = this.ps.executeUpdate();
 
         return this.updateCount == 1;
+    }
+
+    public User selectUserByIdNumber(String idNumber) throws SQLException {
+        this.sql = "select * from tbl_user where idNumber = " + idNumber;
+        this.rs = this.dbCon.getStmt().executeQuery(this.sql);
+
+        if(this.rs.next()){
+            this.user = new User(
+                    this.rs.getLong("id"),         this.rs.getString("idNumber"),
+                    this.rs.getString("password"), this.rs.getString("name"),
+                    this.rs.getString("grade"),    this.rs.getLong("tbl_company_id"));
+            this.rs.close();
+            return this.user;
+        }
+
+        this.rs.close();
+        return null;
     }
 }
