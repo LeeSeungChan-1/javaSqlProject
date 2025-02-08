@@ -36,6 +36,7 @@ public class SelectAll {
         this.jfMain.setTitle(this.dept + "전체조회");
         this.jlTop.setText(this.dept + "전체조회");
         this.dtModel = new DefaultTableModel();
+        this.jtMain.setModel(dtModel);
         dtModel.addColumn("ID");
         dtModel.addColumn("재료코드");
         dtModel.addColumn("재료명");
@@ -48,19 +49,16 @@ public class SelectAll {
     private void jbSelectAll(ActionEvent e) throws SQLException {
         // TODO add your code here
         materials = materialTbl.selectAllMaterial();
-        jtMain.setModel(dtModel);
 
         rowCount = dtModel.getRowCount();
-        System.out.println(rowCount);
-        if(0 < rowCount){
-            for(int i = rowCount - 1; i >= 0; i--){
-                dtModel.removeRow(i);
-                System.out.println("remove row " + i);
-            }
+
+        for(int i = rowCount - 1; i >= 0; i--){
+            dtModel.removeRow(i);
+            System.out.println("remove row " + i);
         }
 
-        for (int i=0; i<materials.size(); i++) {
 
+        for (int i=0; i<materials.size(); i++) {
             materialUnit = unitList[Integer.parseInt(materials.get(i).getMaterialUnit()) - 1];
             dtModel.insertRow(
                     i,

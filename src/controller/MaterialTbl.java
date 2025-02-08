@@ -15,11 +15,12 @@ public class MaterialTbl {
     private PreparedStatement ps;
     private int updateCount;
     private Material material;
-    private ArrayList<Material> materials = new ArrayList<>();
+    private ArrayList<Material> materials;
 
 
     public MaterialTbl() throws SQLException {
         this.dbCon = new DBCon();
+        this.materials = new ArrayList<>();
     }
 
     public boolean insertMaterial(Material material) throws SQLException {
@@ -55,7 +56,7 @@ public class MaterialTbl {
         sql = "select * from tbl_material";
         ps = dbCon.getConn().prepareStatement(sql);
         rs = ps.executeQuery();
-
+        materials.clear();
         while(rs.next()){
             material = new Material(
                     rs.getLong("id"),             rs.getString("materialCode"),

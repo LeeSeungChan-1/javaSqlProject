@@ -38,7 +38,8 @@ public class Login {
                 // 메인 창 띄워주기
                 new Main(user);
                 jfLogin.setVisible(false);
-
+            }else{
+                JOptionPane.showMessageDialog(null, "아이디 혹은 비빌번호가 다릅니다.");
             }
         }
 
