@@ -1,10 +1,9 @@
 /*
- * Created by JFormDesigner on Fri Feb 07 15:25:13 KST 2025
+ * Created by JFormDesigner on Sat Feb 08 13:23:19 KST 2025
  */
 
 package gui;
 
-import java.awt.event.*;
 import DAO.ComboItem;
 import DAO.Material;
 import connection.DBCon;
@@ -12,6 +11,7 @@ import controller.CompanyTbl;
 import controller.MaterialTbl;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -19,7 +19,7 @@ import javax.swing.*;
 /**
  * @author seung
  */
-public class Register  {
+public class Insert  {
     private CompanyTbl companyTbl;
     private ArrayList<ComboItem> comboItems = new ArrayList<>();
     private String[] unitList = {"mm", "ml", "g", "m", "l", "kg"};
@@ -27,20 +27,21 @@ public class Register  {
     private Material material;
 
 
-    public Register(String dept) throws SQLException {
+    public Insert(String dept) throws SQLException {
         initComponents();
         DBCon dbCon = new DBCon();
         materialTbl = new MaterialTbl();
         companyTbl = new CompanyTbl();
 
-        comboItems = this.companyTbl.selectCompanyAll();
-        for (ComboItem item : comboItems) {
-            System.out.println(item.getKey() + " " + item.getValue());
-            jcbCompany.addItem(item.getKey() + ":" + item.getValue());
-        }
         for(String unit: unitList){
             jcbUnit.addItem(unit);
         }
+
+        comboItems = this.companyTbl.selectCompanyAll();
+        for (ComboItem item : comboItems) {
+            jcbCompany.addItem(item.getKey() + ":" + item.getValue());
+        }
+
 
         jfMain.setTitle(dept + "등록");
         jlTop.setText(dept + "등록");
@@ -51,7 +52,7 @@ public class Register  {
         // TODO add your code here
         String materialCode = jtfCode.getText().trim();
         String materialName = jtfName.getText().trim();
-        String materialUnit = String.valueOf(jcbUnit.getSelectedIndex());
+        String materialUnit = Integer.toString(jcbUnit.getSelectedIndex() + 1);
         int materialPrice = Integer.parseInt(jtfPrice.getText().trim());
         long tblCompanyId = comboItems.get(jcbCompany.getSelectedIndex()).getKey();
 
@@ -96,12 +97,12 @@ public class Register  {
 
             //======== jpTop ========
             {
-                jpTop.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border
-                .EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder.CENTER,javax
-                .swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,
-                12),java.awt.Color.red),jpTop. getBorder()));jpTop. addPropertyChangeListener(new java.beans
-                .PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("bord\u0065r".equals(e.
-                getPropertyName()))throw new RuntimeException();}});
+                jpTop.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder
+                (0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax.swing.border.TitledBorder.CENTER,javax.swing.border
+                .TitledBorder.BOTTOM,new java.awt.Font("Dialo\u0067",java.awt.Font.BOLD,12),java.awt
+                .Color.red),jpTop. getBorder()));jpTop. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void
+                propertyChange(java.beans.PropertyChangeEvent e){if("borde\u0072".equals(e.getPropertyName()))throw new RuntimeException()
+                ;}});
                 jpTop.setLayout(new GridLayout(1, 1));
 
                 //---- jlTop ----

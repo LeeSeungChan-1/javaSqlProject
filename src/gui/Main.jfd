@@ -36,6 +36,7 @@ new FormModel {
 					name: "jbSearch"
 					"text": "@조회"
 					"font": #Font0
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSearch", true ) )
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "jbModify"

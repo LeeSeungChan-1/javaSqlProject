@@ -23,86 +23,86 @@ public class UserTbl {
     }
 
     public ArrayList<User> selectUserAll() throws SQLException {
-        this.sql = "select * from tbl_user";
-        this.rs = this.dbCon.getStmt().executeQuery(this.sql);
+        sql = "select * from tbl_user";
+        rs = dbCon.getStmt().executeQuery(sql);
 
-        while (this.rs.next()) {
-            this.user = new User(
-                    this.rs.getLong("id"),         this.rs.getString("idNumber"),
-                    this.rs.getString("password"), this.rs.getString("name"),
-                    this.rs.getString("grade"),    this.rs.getLong("tbl_company_id"));
+        while (rs.next()) {
+            user = new User(
+                    rs.getLong("id"),         rs.getString("idNumber"),
+                    rs.getString("password"), rs.getString("name"),
+                    rs.getString("grade"),    rs.getLong("tbl_company_id"));
 
-            this.users.add(user);
+            users.add(user);
         }
-        this.rs.close();
-        return this.users;
+        rs.close();
+        return users;
     }
 
     public User selectUserByID(long id) throws SQLException {
-        this.sql = "select * from tbl_user where id = " + id;
-        this.rs = this.dbCon.getStmt().executeQuery(this.sql);
+        sql = "select * from tbl_user where id = " + id;
+        rs = dbCon.getStmt().executeQuery(sql);
 
-        if(this.rs.next()){
-            this.user = new User(
-                    this.rs.getLong("id"),         this.rs.getString("idNumber"),
-                    this.rs.getString("password"), this.rs.getString("name"),
-                    this.rs.getString("grade"),    this.rs.getLong("tbl_company_id"));
-            this.rs.close();
-            return this.user;
+        if(rs.next()){
+            user = new User(
+                    rs.getLong("id"),         rs.getString("idNumber"),
+                    rs.getString("password"), rs.getString("name"),
+                    rs.getString("grade"),    rs.getLong("tbl_company_id"));
+            rs.close();
+            return user;
         }
 
-        this.rs.close();
+        rs.close();
         return null;
     }
 
     public boolean insertUser(User user) throws SQLException {
-        this.sql = "insert into tbl_user values(null, ?, ?, ?, ?, ?)";
-        this.ps = this.dbCon.getConn().prepareStatement(this.sql);
-        this.ps.setString(1, user.getIdNumber());
-        this.ps.setString(2, user.getPassword());
-        this.ps.setString(3, user.getName());
-        this.ps.setString(4, user.getGrade());
-        this.ps.setLong(5, user.getTblCompanyId());
-        this.updateCount = this.ps.executeUpdate();
+        sql = "insert into tbl_user values(null, ?, ?, ?, ?, ?)";
+        ps = dbCon.getConn().prepareStatement(sql);
+        ps.setString(1, user.getIdNumber());
+        ps.setString(2, user.getPassword());
+        ps.setString(3, user.getName());
+        ps.setString(4, user.getGrade());
+        ps.setLong(5, user.getTblCompanyId());
+        updateCount = ps.executeUpdate();
 
-        return this.updateCount == 1;
+        return updateCount == 1;
     }
 
     public boolean updateUser(User user) throws SQLException {
-        this.sql = "update tbl_user set password = ?, name = ?, grade = ?, tbl_company_id = ? where id = ?";
-        this.ps = this.dbCon.getConn().prepareStatement(this.sql);
-        this.ps.setString(1, user.getPassword());
-        this.ps.setString(2, user.getName());
-        this.ps.setString(3, user.getGrade());
-        this.ps.setLong(4, user.getTblCompanyId());
-        this.ps.setLong(5, user.getId());
-        this.updateCount = this.ps.executeUpdate();
+        sql = "update tbl_user set password = ?, name = ?, grade = ?, tbl_company_id = ? where id = ?";
+        ps = dbCon.getConn().prepareStatement(sql);
+        ps.setString(1, user.getPassword());
+        ps.setString(2, user.getName());
+        ps.setString(3, user.getGrade());
+        ps.setLong(4, user.getTblCompanyId());
+        ps.setLong(5, user.getId());
+        updateCount = ps.executeUpdate();
 
-        return this.updateCount == 1;
+        return updateCount == 1;
     }
 
     public boolean deleteUser(long id) throws SQLException {
-        this.sql = "delete from tbl_user where id = " + id;
-        this.ps = this.dbCon.getConn().prepareStatement(this.sql);
-        this.updateCount = this.ps.executeUpdate();
+        sql = "delete from tbl_user where id = " + id;
+        ps = dbCon.getConn().prepareStatement(sql);
+        updateCount = ps.executeUpdate();
 
-        return this.updateCount == 1;
+        return updateCount == 1;
     }
 
     public User selectUserByIdNumber(String idNumber) throws SQLException {
-        this.sql = "select * from tbl_user where idNumber = " + idNumber;
-        this.rs = this.dbCon.getStmt().executeQuery(this.sql);
+        sql = "select * from tbl_user where idNumber = " + idNumber;
+        rs = dbCon.getStmt().executeQuery(sql);
 
-        if(this.rs.next()){
-            this.user = new User(
-                    this.rs.getLong("id"),         this.rs.getString("idNumber"),
-                    this.rs.getString("password"), this.rs.getString("name"),
-                    this.rs.getString("grade"),    this.rs.getLong("tbl_company_id"));
-            this.rs.close();
-            return this.user;
+        if(rs.next()){
+            user = new User(
+                    rs.getLong("id"),         rs.getString("idNumber"),
+                    rs.getString("password"), rs.getString("name"),
+                    rs.getString("grade"),    rs.getLong("tbl_company_id"));
+            rs.close();
+            return user;
         }
 
-        this.rs.close();
+        rs.close();
         return null;
     }
 }

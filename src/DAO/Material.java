@@ -16,6 +16,16 @@ public class Material {
     private int price;
     private Long tblCompanyId;
 
+    public Material(long id, String materialCode, String materialName, String materialUnit, int price, Long tblCompanyId) throws SQLException {
+        this.id = id;
+        this.materialCode = materialCode;
+        this.materialName = materialName;
+        this.materialUnit = materialUnit;
+        this.price = price;
+        this.tblCompanyId = tblCompanyId;
+
+    }
+
 
     public Material(String materialCode, String materialName, String materialUnit, int price, Long tblCompanyId) throws SQLException {
         this.materialCode = materialCode;
