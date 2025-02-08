@@ -2,17 +2,15 @@
  * Created by JFormDesigner on Sat Feb 08 13:22:52 KST 2025
  */
 
-package gui;
+package gui.material;
 
 import DAO.ComboItem;
 import DAO.Material;
-import connection.DBCon;
 import controller.CompanyTbl;
 import controller.MaterialTbl;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -20,14 +18,14 @@ import javax.swing.*;
 /**
  * @author seung
  */
-public class Select extends JFrame {
+public class MaterialSelect extends JFrame {
     private MaterialTbl materialTbl;
     private Material material;
     private CompanyTbl companyTbl;
     private String[] unitList = {"mm", "ml", "g", "m", "l", "kg"};
     private ArrayList<ComboItem> comboItems = new ArrayList<>();
 
-    public Select(String dept) throws SQLException {
+    public MaterialSelect(String dept) throws SQLException {
         initComponents();
         materialTbl = new MaterialTbl();
         companyTbl = new CompanyTbl();

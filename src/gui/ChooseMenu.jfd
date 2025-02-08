@@ -1,0 +1,58 @@
+JFDML JFormDesigner: "8.2.4.0.393" Java: "21.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "jfMain"
+			"preferredSize": new java.awt.Dimension( 500, 200 )
+			"title": "@ : 이름 : 사번"
+			"visible": true
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+				"columns": 1
+			} ) {
+				name: "jpTop"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "jlTop"
+					"text": "@메뉴"
+					"font": new java.awt.Font( "맑은 고딕", 0, 30 )
+					"horizontalAlignment": 0
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "North"
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+				"columns": 2
+				"rows": 2
+			} ) {
+				name: "jpMain"
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbMaterial"
+					"text": "@관리"
+					"font": &Font0 new java.awt.Font( "맑은 고딕", 0, 20 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbMaterial", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbMaterialOrder"
+					"text": "@발주"
+					"font": #Font0
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbMaterialOrder", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbMaterialWarehousing"
+					"text": "@입고"
+					"font": #Font0
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "button4"
+					"font": #Font0
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 400, 300 )
+			"location": new java.awt.Point( 0, 0 )
+		} )
+	}
+}

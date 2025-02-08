@@ -1,0 +1,61 @@
+JFDML JFormDesigner: "8.2.4.0.393" Java: "21.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "jfMain"
+			"preferredSize": new java.awt.Dimension( 500, 200 )
+			"title": "@관리 : 이름 : 사번"
+			"visible": true
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+				"columns": 1
+			} ) {
+				name: "jpTop"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "jlTop"
+					"text": "@관리"
+					"font": new java.awt.Font( "맑은 고딕", 0, 30 )
+					"horizontalAlignment": 0
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "North"
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+				"columns": 2
+				"rows": 2
+			} ) {
+				name: "jpMain"
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbSelectAll"
+					"text": "@전체조회"
+					"font": &Font0 new java.awt.Font( "맑은 고딕", 0, 20 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelectAll", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbInsert"
+					"text": "@등록"
+					"font": new java.awt.Font( "맑은 고딕", 0, 20 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbInsert", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbSelect"
+					"text": "@조회"
+					"font": #Font0
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelect", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbSelectAmount"
+					"text": "@수량조회"
+					"font": new java.awt.Font( "맑은 고딕", 0, 20 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelectAmount", true ) )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 400, 300 )
+		} )
+	}
+}

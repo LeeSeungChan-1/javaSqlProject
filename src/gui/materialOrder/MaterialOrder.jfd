@@ -6,7 +6,7 @@ new FormModel {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 			name: "jfMain"
 			"preferredSize": new java.awt.Dimension( 500, 200 )
-			"title": "@관리 : 이름 : 사번"
+			"title": "@발주 : 이름 : 사번"
 			"visible": true
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
 				"columns": 1
@@ -14,7 +14,7 @@ new FormModel {
 				name: "jpTop"
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "jlTop"
-					"text": "@관리"
+					"text": "@발주"
 					"font": new java.awt.Font( "맑은 고딕", 0, 30 )
 					"horizontalAlignment": 0
 				} )
@@ -22,33 +22,35 @@ new FormModel {
 				"value": "North"
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
-				"columns": 3
+				"columns": 2
+				"rows": 2
 			} ) {
 				name: "jpMain"
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "jbSelectAll"
-					"text": "@전체조회"
+					"text": "@발주전체조회"
 					"font": &Font0 new java.awt.Font( "맑은 고딕", 0, 20 )
-					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelectAll", true ) )
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "jbInsert"
-					"text": "@등록"
-					"font": new java.awt.Font( "맑은 고딕", 0, 20 )
+					"text": "@발주등록"
+					"font": #Font0
 					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbInsert", true ) )
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "jbSelect"
-					"text": "@조회"
+					"text": "@발주조회"
 					"font": #Font0
-					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelect", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "button4"
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "Center"
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 0 )
 			"size": new java.awt.Dimension( 400, 300 )
+			"location": new java.awt.Point( 0, 0 )
 		} )
 	}
 }

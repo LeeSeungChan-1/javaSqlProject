@@ -1,6 +1,8 @@
 package controller;
 
 import DAO.Material;
+import DAO.MaterialToCompany;
+import DAO.MaterialToMaterialAmount;
 import connection.DBCon;
 
 import java.sql.PreparedStatement;
@@ -16,11 +18,17 @@ public class MaterialTbl {
     private int updateCount;
     private Material material;
     private ArrayList<Material> materials;
+    private MaterialToCompany materialToCompany;
+    private ArrayList<MaterialToCompany> materialToCompanys;
+    private MaterialToMaterialAmount materialToMaterialAmount;
+    private ArrayList<MaterialToMaterialAmount> materialToMaterialAmounts;
 
 
     public MaterialTbl() throws SQLException {
         this.dbCon = new DBCon();
         this.materials = new ArrayList<>();
+        this.materialToCompanys = new ArrayList<>();
+        this.materialToMaterialAmounts = new ArrayList<>();
     }
 
     public boolean insertMaterial(Material material) throws SQLException {
@@ -52,20 +60,21 @@ public class MaterialTbl {
         }
     }
 
-    public ArrayList<Material> selectAllMaterial() throws SQLException {
-        sql = "select * from tbl_material";
+    public ArrayList<MaterialToCompany> selectAllMaterialToCompany() throws SQLException {
+        sql = "select a.id , a.materialCode , a.materialName , a.materialUnit , a.price , a.tbl_company_id , b.companyName  from tbl_material a, tbl_company b where a.tbl_company_id = b.id";
         ps = dbCon.getConn().prepareStatement(sql);
         rs = ps.executeQuery();
-        materials.clear();
+        materialToCompanys.clear();
         while(rs.next()){
-            material = new Material(
+            materialToCompany = new MaterialToCompany(
                     rs.getLong("id"),             rs.getString("materialCode"),
                     rs.getString("materialName"), rs.getString("materialUnit"),
-                    rs.getInt("price"),           rs.getLong("tbl_company_id"));
-            materials.add(material);
+                    rs.getInt("price"),           rs.getLong("tbl_company_id"),
+                    rs.getString("companyName"));
+            materialToCompanys.add(materialToCompany);
         }
         rs.close();
-        return materials;
+        return materialToCompanys;
     }
 
     public boolean updateMaterial(Material material) throws SQLException {
@@ -90,5 +99,25 @@ public class MaterialTbl {
         updateCount = ps.executeUpdate();
         ps.close();
         return updateCount == 1;
+    }
+
+    public ArrayList<MaterialToMaterialAmount> selectAllMaterialToMaterialAmount() throws SQLException {
+        sql = "select a.id, a.materialCode, a.materialName, a.materialUnit, a.price, a.tbl_company_id, b.id tbl_materialAmount_id, b.materialAmount" +
+              "  from tbl_material a, tbl_materialAmount b" +
+              " where a.id = b.tbl_material_id";
+        ps = dbCon.getConn().prepareStatement(sql);
+        rs = ps.executeQuery();
+        materialToMaterialAmounts.clear();
+        while(rs.next()){
+            materialToMaterialAmount = new MaterialToMaterialAmount(
+                    rs.getLong("id"),                    rs.getString("materialCode"),
+                    rs.getString("materialName"),        rs.getString("materialUnit"),
+                    rs.getInt("price"),                  rs.getLong("tbl_company_id"),
+                    rs.getLong("tbl_materialAmount_id"), rs.getInt("materialAmount")
+            );
+            materialToMaterialAmounts.add(materialToMaterialAmount);
+        }
+        rs.close();
+        return materialToMaterialAmounts;
     }
 }

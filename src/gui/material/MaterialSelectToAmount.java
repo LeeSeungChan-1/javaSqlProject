@@ -1,78 +1,69 @@
 /*
- * Created by JFormDesigner on Sat Feb 08 15:36:50 KST 2025
+ * Created by JFormDesigner on Sat Feb 08 18:17:35 KST 2025
  */
 
-package gui;
+package gui.material;
 
-import DAO.Material;
+import DAO.MaterialToMaterialAmount;
 import controller.MaterialTbl;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.*;
 
 /**
  * @author seung
  */
-public class SelectAll {
-    private String dept;
-    private ArrayList<Material> materials = new ArrayList<>();
+public class MaterialSelectToAmount extends JFrame {
     private MaterialTbl materialTbl;
     private DefaultTableModel dtModel;
+    private ArrayList<MaterialToMaterialAmount> materialToMaterialAmounts;
+    private int rowCount;
     private String materialUnit;
     private String[] unitList = {"mm", "ml", "g", "m", "l", "kg"};
-    private int rowCount;
 
-    public SelectAll(String dept) throws SQLException {
+    public MaterialSelectToAmount(String dept) throws SQLException {
         initComponents();
-
+        
         this.materialTbl = new MaterialTbl();
-        this.dept = dept;
+        this.materialToMaterialAmounts = new ArrayList<>();
+        this.jfMain.setTitle(dept + "수량조회");
+        this.jlTop.setText(dept + "수량조회");
 
-        this.jfMain.setTitle(this.dept + "전체조회");
-        this.jlTop.setText(this.dept + "전체조회");
         this.dtModel = new DefaultTableModel();
         this.jtMain.setModel(dtModel);
-        dtModel.addColumn("ID");
-        dtModel.addColumn("재료코드");
-        dtModel.addColumn("재료명");
-        dtModel.addColumn("재료단위");
-        dtModel.addColumn("재료가격");
-        dtModel.addColumn("재료회사");
 
+        this.dtModel.addColumn("재료코드");
+        this.dtModel.addColumn("재료명");
+        this.dtModel.addColumn("재료단위");
+        this.dtModel.addColumn("재료가격");
+        this.dtModel.addColumn("재료수량");
     }
 
-    private void jbSelectAll(ActionEvent e) throws SQLException {
+    private void jbSelectAmount(ActionEvent e) throws SQLException {
         // TODO add your code here
-        materials = materialTbl.selectAllMaterial();
-
+        materialToMaterialAmounts = materialTbl.selectAllMaterialToMaterialAmount();
         rowCount = dtModel.getRowCount();
-
         for(int i = rowCount - 1; i >= 0; i--){
             dtModel.removeRow(i);
-            System.out.println("remove row " + i);
         }
 
-
-        for (int i=0; i<materials.size(); i++) {
-            materialUnit = unitList[Integer.parseInt(materials.get(i).getMaterialUnit()) - 1];
+        for (int i=0; i<materialToMaterialAmounts.size(); i++) {
+            materialUnit = unitList[Integer.parseInt(materialToMaterialAmounts.get(i).getMaterialUnit()) - 1];
             dtModel.insertRow(
                     i,
                     new Object[]{
-                            materials.get(i).getId(),           materials.get(i).getMaterialCode(),
-                            materials.get(i).getMaterialName(), materialUnit,
-                            materials.get(i).getPrice(),        materials.get(i).getTblCompanyId()});
+                            materialToMaterialAmounts.get(i).getMaterialCode(), materialToMaterialAmounts.get(i).getMaterialName(),
+                            materialUnit,                                       materialToMaterialAmounts.get(i).getPrice(),
+                            materialToMaterialAmounts.get(i).getMaterialAmount()});
         }
-
+        
     }
 
-    private void jbTop(ActionEvent e) {
-        // TODO add your code here
-    }
+    
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -80,14 +71,14 @@ public class SelectAll {
         jfMain = new JFrame();
         jpTop = new JPanel();
         jlTop = new JLabel();
-        jbSelectAll = new JButton();
+        jbSelectAmount = new JButton();
         jpMain = new JPanel();
         jspMain = new JScrollPane();
         jtMain = new JTable();
 
         //======== jfMain ========
         {
-            jfMain.setTitle("@\uc804\uccb4\uc870\ud68c");
+            jfMain.setTitle("@\uc218\ub7c9\uc870\ud68c");
             jfMain.setVisible(true);
             var jfMainContentPane = jfMain.getContentPane();
             jfMainContentPane.setLayout(new BorderLayout());
@@ -103,19 +94,19 @@ public class SelectAll {
                 jpTop.setLayout(new GridLayout(1, 1));
 
                 //---- jlTop ----
-                jlTop.setText("@\uc804\uccb4\uc870\ud68c");
+                jlTop.setText("@\uc218\ub7c9\uc870\ud68c");
                 jlTop.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
                 jlTop.setHorizontalAlignment(SwingConstants.CENTER);
                 jpTop.add(jlTop);
 
-                //---- jbSelectAll ----
-                jbSelectAll.setText("\uc870\ud68c");
-                jbSelectAll.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
-                jbSelectAll.addActionListener(e -> {try {
-jbSelectAll(e);} catch (SQLException ex) {
+                //---- jbSelectAmount ----
+                jbSelectAmount.setText("\uc870\ud68c");
+                jbSelectAmount.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
+                jbSelectAmount.addActionListener(e -> {try {
+jbSelectAmount(e);} catch (SQLException ex) {
     throw new RuntimeException(ex);
 }});
-                jpTop.add(jbSelectAll);
+                jpTop.add(jbSelectAmount);
             }
             jfMainContentPane.add(jpTop, BorderLayout.NORTH);
 
@@ -144,7 +135,7 @@ jbSelectAll(e);} catch (SQLException ex) {
     private JFrame jfMain;
     private JPanel jpTop;
     private JLabel jlTop;
-    private JButton jbSelectAll;
+    private JButton jbSelectAmount;
     private JPanel jpMain;
     private JScrollPane jspMain;
     private JTable jtMain;

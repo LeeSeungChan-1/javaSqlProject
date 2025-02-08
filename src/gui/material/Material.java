@@ -2,9 +2,10 @@
  * Created by JFormDesigner on Sat Feb 08 16:37:33 KST 2025
  */
 
-package gui;
+package gui.material;
 
 import DAO.User;
+import gui.Insert;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -14,18 +15,20 @@ import javax.swing.*;
 /**
  * @author seung
  */
-public class Main  {
+public class Material {
     private String dept;
 
-    public Main(User user) {
+    public Material(User user) {
         initComponents();
 
         if(user.getTblCompanyId() == 1){
             dept = "자재";
+            jfMain.setTitle(dept + "관리 : " + user.getName() + " : " + user.getIdNumber());
             jlTop.setText(dept + "관리");
             jbSelectAll.setText(dept + "전체조회");
             jbInsert.setText(dept + "등록");
             jbSelect.setText(dept + "조회");
+            jbSelectAmount.setText(dept + "수량조회");
 
         }
 
@@ -34,7 +37,7 @@ public class Main  {
 
     private void jbSelectAll(ActionEvent e) throws SQLException {
         // TODO add your code here
-        new SelectAll(dept);
+        new MaterialSelectAll(dept);
     }
 
     private void jbInsert(ActionEvent e) throws SQLException {
@@ -44,7 +47,13 @@ public class Main  {
 
     private void jbSelect(ActionEvent e) throws SQLException {
         // TODO add your code here
-        new Select(dept);
+        new MaterialSelect(dept);
+    }
+
+    private void jbSelectAmount(ActionEvent e) throws SQLException {
+        // TODO add your code here
+//        new SelectAmount(dept);
+        new MaterialSelectToAmount(dept);
     }
 
     private void initComponents() {
@@ -57,6 +66,7 @@ public class Main  {
         jbSelectAll = new JButton();
         jbInsert = new JButton();
         jbSelect = new JButton();
+        jbSelectAmount = new JButton();
 
         //======== jfMain ========
         {
@@ -68,11 +78,13 @@ public class Main  {
 
             //======== jpTop ========
             {
-                jpTop.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
-                0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder
-                .BOTTOM,new java.awt.Font("Dialo\u0067",java.awt.Font.BOLD,12),java.awt.Color.
-                red),jpTop. getBorder()));jpTop. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.
-                beans.PropertyChangeEvent e){if("borde\u0072".equals(e.getPropertyName()))throw new RuntimeException();}});
+                jpTop.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing
+                . border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e" , javax. swing .border . TitledBorder
+                . CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dialo\u0067", java .
+                awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,jpTop. getBorder () ) )
+                ; jpTop. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
+                ) { if( "borde\u0072" .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } )
+                ;
                 jpTop.setLayout(new GridLayout(1, 1));
 
                 //---- jlTop ----
@@ -85,7 +97,7 @@ public class Main  {
 
             //======== jpMain ========
             {
-                jpMain.setLayout(new GridLayout(1, 3));
+                jpMain.setLayout(new GridLayout(2, 2));
 
                 //---- jbSelectAll ----
                 jbSelectAll.setText("@\uc804\uccb4\uc870\ud68c");
@@ -113,6 +125,15 @@ jbSelect(e);} catch (SQLException ex) {
     throw new RuntimeException(ex);
 }});
                 jpMain.add(jbSelect);
+
+                //---- jbSelectAmount ----
+                jbSelectAmount.setText("@\uc218\ub7c9\uc870\ud68c");
+                jbSelectAmount.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
+                jbSelectAmount.addActionListener(e -> {try {
+jbSelectAmount(e);} catch (SQLException ex) {
+    throw new RuntimeException(ex);
+}});
+                jpMain.add(jbSelectAmount);
             }
             jfMainContentPane.add(jpMain, BorderLayout.CENTER);
             jfMain.pack();
@@ -130,5 +151,6 @@ jbSelect(e);} catch (SQLException ex) {
     private JButton jbSelectAll;
     private JButton jbInsert;
     private JButton jbSelect;
+    private JButton jbSelectAmount;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
