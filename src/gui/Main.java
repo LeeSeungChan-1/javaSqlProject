@@ -1,5 +1,5 @@
 /*
- * Created by JFormDesigner on Fri Feb 07 11:44:14 KST 2025
+ * Created by JFormDesigner on Sat Feb 08 16:37:33 KST 2025
  */
 
 package gui;
@@ -14,33 +14,36 @@ import javax.swing.*;
 /**
  * @author seung
  */
-public class Main {
+public class Main  {
     private String dept;
+
     public Main(User user) {
         initComponents();
 
-        System.out.println(user.getTblCompanyId());
-        if(user.getTblCompanyId() == 1) {
+        if(user.getTblCompanyId() == 1){
             dept = "자재";
-            jlTop.setText(dept);
-            jbRegister.setText(dept + "등록");
-            jbSearch.setText(dept + "조회");
-            jbModify.setText(dept + "수정");
-            jbDelete.setText(dept + "삭제");
-            jfMain.setTitle(dept + " : " + user.getName() + " : " + user.getIdNumber());
+            jlTop.setText(dept + "관리");
+            jbSelectAll.setText(dept + "전체조회");
+            jbInsert.setText(dept + "등록");
+            jbSelect.setText(dept + "조회");
+
         }
+
     }
 
-    private void jbRegister(ActionEvent e) throws SQLException {
-        // TODO add your code here
 
+    private void jbSelectAll(ActionEvent e) throws SQLException {
+        // TODO add your code here
+        new SelectAll(dept);
+    }
+
+    private void jbInsert(ActionEvent e) throws SQLException {
+        // TODO add your code here
         new Insert(dept);
-
     }
 
-    private void jbSearch(ActionEvent e) throws SQLException {
+    private void jbSelect(ActionEvent e) throws SQLException {
         // TODO add your code here
-        
         new Select(dept);
     }
 
@@ -51,26 +54,25 @@ public class Main {
         jpTop = new JPanel();
         jlTop = new JLabel();
         jpMain = new JPanel();
-        jbRegister = new JButton();
-        jbSearch = new JButton();
-        jbModify = new JButton();
-        jbDelete = new JButton();
+        jbSelectAll = new JButton();
+        jbInsert = new JButton();
+        jbSelect = new JButton();
 
         //======== jfMain ========
         {
-            jfMain.setPreferredSize(new Dimension(500, 300));
-            jfMain.setTitle("\ub85c\uadf8\uc778\ud55c \uc0ac\ub78c \uba85 + \uc0ac\ubc88");
+            jfMain.setPreferredSize(new Dimension(500, 200));
+            jfMain.setTitle("@\uad00\ub9ac : \uc774\ub984 : \uc0ac\ubc88");
             jfMain.setVisible(true);
             var jfMainContentPane = jfMain.getContentPane();
             jfMainContentPane.setLayout(new BorderLayout());
 
             //======== jpTop ========
             {
-                jpTop.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0
-                ,0,0,0), "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e",javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM
-                ,new java.awt.Font("D\u0069al\u006fg",java.awt.Font.BOLD,12),java.awt.Color.red),
-                jpTop. getBorder()));jpTop. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
-                ){if("\u0062or\u0064er".equals(e.getPropertyName()))throw new RuntimeException();}});
+                jpTop.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
+                0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder
+                .BOTTOM,new java.awt.Font("Dialo\u0067",java.awt.Font.BOLD,12),java.awt.Color.
+                red),jpTop. getBorder()));jpTop. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.
+                beans.PropertyChangeEvent e){if("borde\u0072".equals(e.getPropertyName()))throw new RuntimeException();}});
                 jpTop.setLayout(new GridLayout(1, 1));
 
                 //---- jlTop ----
@@ -83,35 +85,34 @@ public class Main {
 
             //======== jpMain ========
             {
-                jpMain.setLayout(new GridLayout(2, 2));
+                jpMain.setLayout(new GridLayout(1, 3));
 
-                //---- jbRegister ----
-                jbRegister.setText("@\ub4f1\ub85d");
-                jbRegister.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
-                jbRegister.addActionListener(e -> {try {
-jbRegister(e);} catch (SQLException ex) {
+                //---- jbSelectAll ----
+                jbSelectAll.setText("@\uc804\uccb4\uc870\ud68c");
+                jbSelectAll.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
+                jbSelectAll.addActionListener(e -> {try {
+jbSelectAll(e);} catch (SQLException ex) {
     throw new RuntimeException(ex);
 }});
-                jpMain.add(jbRegister);
+                jpMain.add(jbSelectAll);
 
-                //---- jbSearch ----
-                jbSearch.setText("@\uc870\ud68c");
-                jbSearch.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
-                jbSearch.addActionListener(e -> {try {
-jbSearch(e);} catch (SQLException ex) {
+                //---- jbInsert ----
+                jbInsert.setText("@\ub4f1\ub85d");
+                jbInsert.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
+                jbInsert.addActionListener(e -> {try {
+jbInsert(e);} catch (SQLException ex) {
     throw new RuntimeException(ex);
 }});
-                jpMain.add(jbSearch);
+                jpMain.add(jbInsert);
 
-                //---- jbModify ----
-                jbModify.setText("@\uc218\uc815");
-                jbModify.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
-                jpMain.add(jbModify);
-
-                //---- jbDelete ----
-                jbDelete.setText("@\uc0ad\uc81c");
-                jbDelete.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
-                jpMain.add(jbDelete);
+                //---- jbSelect ----
+                jbSelect.setText("@\uc870\ud68c");
+                jbSelect.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
+                jbSelect.addActionListener(e -> {try {
+jbSelect(e);} catch (SQLException ex) {
+    throw new RuntimeException(ex);
+}});
+                jpMain.add(jbSelect);
             }
             jfMainContentPane.add(jpMain, BorderLayout.CENTER);
             jfMain.pack();
@@ -126,9 +127,8 @@ jbSearch(e);} catch (SQLException ex) {
     private JPanel jpTop;
     private JLabel jlTop;
     private JPanel jpMain;
-    private JButton jbRegister;
-    private JButton jbSearch;
-    private JButton jbModify;
-    private JButton jbDelete;
+    private JButton jbSelectAll;
+    private JButton jbInsert;
+    private JButton jbSelect;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

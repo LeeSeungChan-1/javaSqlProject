@@ -5,8 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 			name: "jfMain"
-			"preferredSize": new java.awt.Dimension( 500, 200 )
-			"title": "@관리 : 이름 : 사번"
+			"title": "@전체조회"
 			"visible": true
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
 				"columns": 1
@@ -14,34 +13,29 @@ new FormModel {
 				name: "jpTop"
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "jlTop"
-					"text": "@관리"
-					"font": new java.awt.Font( "맑은 고딕", 0, 30 )
+					"text": "@전체조회"
+					"font": new java.awt.Font( "맑은 고딕", 0, 20 )
 					"horizontalAlignment": 0
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbSelectAll"
+					"text": "조회"
+					"font": new java.awt.Font( "맑은 고딕", 0, 20 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelectAll", true ) )
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "North"
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
-				"columns": 3
+				"columns": 1
 			} ) {
 				name: "jpMain"
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "jbSelectAll"
-					"text": "@전체조회"
-					"font": &Font0 new java.awt.Font( "맑은 고딕", 0, 20 )
-					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelectAll", true ) )
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "jbInsert"
-					"text": "@등록"
-					"font": new java.awt.Font( "맑은 고딕", 0, 20 )
-					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbInsert", true ) )
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "jbSelect"
-					"text": "@조회"
-					"font": #Font0
-					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelect", true ) )
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "jspMain"
+					add( new FormComponent( "javax.swing.JTable" ) {
+						name: "jtMain"
+						"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector, new java.util.Vector, new java.util.Vector, new java.util.Vector )
+					} )
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "Center"

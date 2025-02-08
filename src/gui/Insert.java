@@ -48,7 +48,7 @@ public class Insert  {
 
     }
 
-    private void jbSave(ActionEvent e) throws SQLException {
+    private void jbInsert(ActionEvent e) throws SQLException {
         // TODO add your code here
         String materialCode = jtfCode.getText().trim();
         String materialName = jtfName.getText().trim();
@@ -65,6 +65,10 @@ public class Insert  {
         }
 
     }
+
+    
+
+    
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -84,7 +88,7 @@ public class Insert  {
         jlCompany = new JLabel();
         jcbCompany = new JComboBox();
         blank = new JLabel();
-        jbSave = new JButton();
+        jbInsert = new JButton();
 
         //======== jfMain ========
         {
@@ -97,12 +101,12 @@ public class Insert  {
 
             //======== jpTop ========
             {
-                jpTop.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder
-                (0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax.swing.border.TitledBorder.CENTER,javax.swing.border
-                .TitledBorder.BOTTOM,new java.awt.Font("Dialo\u0067",java.awt.Font.BOLD,12),java.awt
-                .Color.red),jpTop. getBorder()));jpTop. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void
-                propertyChange(java.beans.PropertyChangeEvent e){if("borde\u0072".equals(e.getPropertyName()))throw new RuntimeException()
-                ;}});
+                jpTop.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing.
+                border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER
+                , javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font
+                .BOLD ,12 ), java. awt. Color. red) ,jpTop. getBorder( )) ); jpTop. addPropertyChangeListener (
+                new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r"
+                .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
                 jpTop.setLayout(new GridLayout(1, 1));
 
                 //---- jlTop ----
@@ -171,14 +175,14 @@ public class Insert  {
                 jpMain.add(jcbCompany);
                 jpMain.add(blank);
 
-                //---- jbSave ----
-                jbSave.setText("\uc800\uc7a5");
-                jbSave.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
-                jbSave.addActionListener(e -> {try {
-jbSave(e);} catch (SQLException ex) {
+                //---- jbInsert ----
+                jbInsert.setText("\ub4f1\ub85d");
+                jbInsert.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
+                jbInsert.addActionListener(e -> {try {
+jbInsert(e);} catch (SQLException ex) {
     throw new RuntimeException(ex);
 }});
-                jpMain.add(jbSave);
+                jpMain.add(jbInsert);
             }
             jfMainContentPane.add(jpMain, BorderLayout.CENTER);
             jfMain.pack();
@@ -204,6 +208,6 @@ jbSave(e);} catch (SQLException ex) {
     private JLabel jlCompany;
     private JComboBox jcbCompany;
     private JLabel blank;
-    private JButton jbSave;
+    private JButton jbInsert;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

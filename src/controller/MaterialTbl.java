@@ -6,6 +6,7 @@ import connection.DBCon;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MaterialTbl {
     private DBCon dbCon;
@@ -14,6 +15,7 @@ public class MaterialTbl {
     private PreparedStatement ps;
     private int updateCount;
     private Material material;
+    private ArrayList<Material> materials = new ArrayList<>();
 
 
     public MaterialTbl() throws SQLException {
@@ -47,6 +49,22 @@ public class MaterialTbl {
         }else{
             return null;
         }
+    }
+
+    public ArrayList<Material> selectAllMaterial() throws SQLException {
+        sql = "select * from tbl_material";
+        ps = dbCon.getConn().prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+            material = new Material(
+                    rs.getLong("id"),             rs.getString("materialCode"),
+                    rs.getString("materialName"), rs.getString("materialUnit"),
+                    rs.getInt("price"),           rs.getLong("tbl_company_id"));
+            materials.add(material);
+        }
+        rs.close();
+        return materials;
     }
 
     public boolean updateMaterial(Material material) throws SQLException {

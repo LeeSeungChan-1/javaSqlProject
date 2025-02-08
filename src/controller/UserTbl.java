@@ -22,7 +22,7 @@ public class UserTbl {
         this.dbCon = dbCon;
     }
 
-    public ArrayList<User> selectUserAll() throws SQLException {
+    public ArrayList<User> selectAllUser() throws SQLException {
         sql = "select * from tbl_user";
         rs = dbCon.getStmt().executeQuery(sql);
 

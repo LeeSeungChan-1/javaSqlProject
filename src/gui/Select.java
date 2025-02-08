@@ -21,7 +21,6 @@ import javax.swing.*;
  * @author seung
  */
 public class Select extends JFrame {
-    private DBCon dbCon;
     private MaterialTbl materialTbl;
     private Material material;
     private CompanyTbl companyTbl;
@@ -30,8 +29,6 @@ public class Select extends JFrame {
 
     public Select(String dept) throws SQLException {
         initComponents();
-
-        dbCon = new DBCon();
         materialTbl = new MaterialTbl();
         companyTbl = new CompanyTbl();
 
