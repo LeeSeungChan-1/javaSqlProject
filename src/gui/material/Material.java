@@ -5,7 +5,6 @@
 package gui.material;
 
 import DAO.User;
-import gui.Insert;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -42,7 +41,7 @@ public class Material {
 
     private void jbInsert(ActionEvent e) throws SQLException {
         // TODO add your code here
-        new Insert(dept);
+        new MaterialInsert(dept);
     }
 
     private void jbSelect(ActionEvent e) throws SQLException {

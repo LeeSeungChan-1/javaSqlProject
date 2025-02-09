@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Sat Feb 08 13:23:19 KST 2025
  */
 
-package gui;
+package gui.material;
 
 import DAO.ComboItem;
 import DAO.Material;
@@ -19,7 +19,7 @@ import javax.swing.*;
 /**
  * @author seung
  */
-public class Insert  {
+public class MaterialInsert {
     private CompanyTbl companyTbl;
     private ArrayList<ComboItem> comboItems = new ArrayList<>();
     private String[] unitList = {"mm", "ml", "g", "m", "l", "kg"};
@@ -27,7 +27,7 @@ public class Insert  {
     private Material material;
 
 
-    public Insert(String dept) throws SQLException {
+    public MaterialInsert(String dept) throws SQLException {
         initComponents();
         DBCon dbCon = new DBCon();
         materialTbl = new MaterialTbl();
@@ -101,12 +101,12 @@ public class Insert  {
 
             //======== jpTop ========
             {
-                jpTop.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing.
-                border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER
-                , javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font
-                .BOLD ,12 ), java. awt. Color. red) ,jpTop. getBorder( )) ); jpTop. addPropertyChangeListener (
-                new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r"
-                .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+                jpTop.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.
+                EmptyBorder(0,0,0,0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn",javax.swing.border.TitledBorder.CENTER,javax.swing
+                .border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),
+                java.awt.Color.red),jpTop. getBorder()));jpTop. addPropertyChangeListener(new java.beans.PropertyChangeListener()
+                {@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("\u0062ord\u0065r".equals(e.getPropertyName()))
+                throw new RuntimeException();}});
                 jpTop.setLayout(new GridLayout(1, 1));
 
                 //---- jlTop ----

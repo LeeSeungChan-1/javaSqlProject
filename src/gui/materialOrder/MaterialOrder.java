@@ -8,6 +8,7 @@ import DAO.User;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import javax.swing.*;
 
 /**
@@ -26,17 +27,23 @@ public class MaterialOrder extends JFrame {
             this.dept = "자재";
             this.jfMain.setTitle(dept + "발주 : " + user.getName() + " : " + user.getIdNumber());
             this.jlTop.setText(dept + "발주");
-            this.jbSelect.setText(dept + "조회");
-            this.jbSelectAll.setText(dept + "전체조회");
-            this.jbInsert.setText(dept + "등록");
+            this.jbSelect.setText(dept + "발주조회");
+            this.jbSelectAll.setText(dept + "발주전체조회");
+            this.jbInsert.setText(dept + "발주등록");
 
         }
     }
 
-    private void jbInsert(ActionEvent e) {
+    private void jbInsert(ActionEvent e) throws SQLException {
         // TODO add your code here
+        new MaterialOrderInsert(user);
     }
-    
+
+    private void jbSelect(ActionEvent e) throws SQLException {
+        // TODO add your code here
+        new MaterialOrderSelect(user);
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -60,13 +67,12 @@ public class MaterialOrder extends JFrame {
 
             //======== jpTop ========
             {
-                jpTop.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax.
-                swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border
-                . TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog"
-                ,java .awt .Font .BOLD ,12 ), java. awt. Color. red) ,jpTop. getBorder
-                ( )) ); jpTop. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java
-                .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException
-                ( ); }} );
+                jpTop.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing.
+                border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border. TitledBorder. CENTER
+                , javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dialo\u0067" ,java .awt .Font
+                .BOLD ,12 ), java. awt. Color. red) ,jpTop. getBorder( )) ); jpTop. addPropertyChangeListener (
+                new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("borde\u0072"
+                .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
                 jpTop.setLayout(new GridLayout(1, 1));
 
                 //---- jlTop ----
@@ -89,12 +95,19 @@ public class MaterialOrder extends JFrame {
                 //---- jbInsert ----
                 jbInsert.setText("@\ubc1c\uc8fc\ub4f1\ub85d");
                 jbInsert.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
-                jbInsert.addActionListener(e -> jbInsert(e));
+                jbInsert.addActionListener(e -> {try {
+jbInsert(e);} catch (SQLException ex) {
+    throw new RuntimeException(ex);
+}});
                 jpMain.add(jbInsert);
 
                 //---- jbSelect ----
                 jbSelect.setText("@\ubc1c\uc8fc\uc870\ud68c");
                 jbSelect.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 20));
+                jbSelect.addActionListener(e -> {try {
+jbSelect(e);} catch (SQLException ex) {
+    throw new RuntimeException(ex);
+}});
                 jpMain.add(jbSelect);
                 jpMain.add(button4);
             }

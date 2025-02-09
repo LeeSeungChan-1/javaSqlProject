@@ -39,11 +39,11 @@ public class MaterialSelectAll {
         this.dtModel = new DefaultTableModel();
         this.jtMain.setModel(dtModel);
 
-        this.dtModel.addColumn("재료코드");
-        this.dtModel.addColumn("재료명");
-        this.dtModel.addColumn("재료단위");
-        this.dtModel.addColumn("재료가격");
-        this.dtModel.addColumn("재료회사");
+        this.dtModel.addColumn("자재코드");
+        this.dtModel.addColumn("자재명");
+        this.dtModel.addColumn("자재단위");
+        this.dtModel.addColumn("자재가격");
+        this.dtModel.addColumn("자재회사");
 
     }
 

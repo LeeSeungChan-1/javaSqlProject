@@ -120,4 +120,21 @@ public class MaterialTbl {
         rs.close();
         return materialToMaterialAmounts;
     }
+
+    public ArrayList<Material> selectAllMaterial() throws SQLException {
+        sql = "select * from tbl_material";
+        ps = dbCon.getConn().prepareStatement(sql);
+        rs = ps.executeQuery();
+        materials.clear();
+        while(rs.next()){
+            material = new Material(
+                    rs.getLong("id"),             rs.getString("materialCode"),
+                    rs.getString("materialName"), rs.getString("materialUnit"),
+                    rs.getInt("price"),           rs.getLong("tbl_company_id")
+            );
+            materials.add(material);
+        }
+        rs.close();
+        return materials;
+    }
 }
