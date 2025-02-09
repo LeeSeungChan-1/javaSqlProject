@@ -118,7 +118,10 @@ public class MaterialOrderSelectAll extends JFrame {
 
                 //---- jbSelectAll ----
                 jbSelectAll.setText("@\ubc1c\uc8fc\uc804\uccb4\uc870\ud68c");
-                jbSelectAll.addActionListener(e -> jbSelectAll(e));
+                jbSelectAll.addActionListener(e -> {try {
+jbSelectAll(e);} catch (SQLException ex) {
+    throw new RuntimeException(ex);
+}});
                 jpTop.add(jbSelectAll);
             }
             jfMainContentPane.add(jpTop, BorderLayout.NORTH);
