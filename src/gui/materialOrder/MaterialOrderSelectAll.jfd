@@ -7,6 +7,7 @@ new FormModel {
 			name: "jfMain"
 			"title": "@발주전체조회"
 			"visible": true
+			"preferredSize": new java.awt.Dimension( 800, 500 )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
 				"columns": 1
 			} ) {

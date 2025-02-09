@@ -11,7 +11,7 @@ public class MaterialOrderToMaterialOrderDetailToMaterial extends MaterialOrder{
     private String materialCode;
 
     public MaterialOrderToMaterialOrderDetailToMaterial(long id, String orderNumber, String orderDate, String orderer, long tblMaterialOrderDetailId, String orderNumberDetail, int amount, long tblMaterialId, String materialName, String materialCode) {
-        super(id, orderDate, orderer, orderer);
+        super(id, orderNumber, orderDate, orderer);
         this.tblMaterialOrderDetailId = tblMaterialOrderDetailId;
         this.orderNumberDetail = orderNumberDetail;
         this.amount = amount;
