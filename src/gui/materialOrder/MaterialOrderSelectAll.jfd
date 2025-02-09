@@ -17,12 +17,10 @@ new FormModel {
 					"font": new java.awt.Font( "맑은 고딕", 0, 16 )
 					"horizontalAlignment": 0
 				} )
-				add( new FormComponent( "javax.swing.JTextField" ) {
-					name: "jtfSelectAll"
-				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "jbSelectAll"
 					"text": "@발주전체조회"
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelectAll", true ) )
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "North"

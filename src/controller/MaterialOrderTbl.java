@@ -84,6 +84,28 @@ public class MaterialOrderTbl {
         ps = conn.prepareStatement(sql);
         ps.setString(1, orderNumber);
         rs = ps.executeQuery();
+
+        materialOrderToMaterialOrderDetailToMaterials.clear();
+        while(rs.next()) {
+            materialOrderToMaterialOrderDetailToMaterial = new MaterialOrderToMaterialOrderDetailToMaterial(
+                    rs.getLong("idA"),       rs.getString("orderNumber"),   rs.getString("orderDate"),
+                    rs.getString("orderer"), rs.getLong("idB"),             rs.getString("orderNumberDetail"),
+                    rs.getInt("amount"),     rs.getLong("tbl_material_id"), rs.getString("materialCode"),
+                    rs.getString("materialName")
+            );
+            materialOrderToMaterialOrderDetailToMaterials.add(materialOrderToMaterialOrderDetailToMaterial);
+        }
+        return materialOrderToMaterialOrderDetailToMaterials;
+    }
+
+    public ArrayList<MaterialOrderToMaterialOrderDetailToMaterial> selectAllToMaterialOrderDetailToMaterial() throws SQLException {
+        sql = "select a.id idA, a.orderNumber, a.orderDate, a.orderer, b.id idB, b.orderNumberDetail, b.amount, b.tbl_material_id, c.materialCode, c.materialName" +
+                "  from tbl_materialOrder a, tbl_materialOrderDetail b, tbl_material c" +
+                " where a.id = b.tbl_materialOrder_id" +
+                "   and b.tbl_material_id = c.id";
+        ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+
         materialOrderToMaterialOrderDetailToMaterials.clear();
         while(rs.next()) {
             materialOrderToMaterialOrderDetailToMaterial = new MaterialOrderToMaterialOrderDetailToMaterial(

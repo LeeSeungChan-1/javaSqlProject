@@ -30,6 +30,7 @@ new FormModel {
 					name: "jbSelectAll"
 					"text": "@발주전체조회"
 					"font": &Font0 new java.awt.Font( "맑은 고딕", 0, 20 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelectAll", true ) )
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "jbInsert"
