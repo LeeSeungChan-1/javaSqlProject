@@ -23,86 +23,129 @@ public class UserTbl {
     }
 
     public ArrayList<User> selectAllUser() throws SQLException {
-        sql = "select * from tbl_user";
-        rs = dbCon.getStmt().executeQuery(sql);
+        try{
+            sql = "select * from tbl_user";
+            rs = dbCon.getStmt().executeQuery(sql);
 
-        while (rs.next()) {
-            user = new User(
-                    rs.getLong("id"),         rs.getString("idNumber"),
-                    rs.getString("password"), rs.getString("name"),
-                    rs.getString("grade"),    rs.getLong("tbl_company_id"));
+            while (rs.next()) {
+                user = new User(
+                        rs.getLong("id"),         rs.getString("idNumber"),
+                        rs.getString("password"), rs.getString("name"),
+                        rs.getString("grade"),    rs.getLong("tbl_company_id"));
 
-            users.add(user);
+                users.add(user);
+            }
+
+            return users;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            rs.close();
         }
-        rs.close();
-        return users;
+
     }
 
     public User selectUserByID(long id) throws SQLException {
-        sql = "select * from tbl_user where id = " + id;
-        rs = dbCon.getStmt().executeQuery(sql);
+        try{
+            sql = "select * from tbl_user where id = " + id;
+            rs = dbCon.getStmt().executeQuery(sql);
 
-        if(rs.next()){
-            user = new User(
-                    rs.getLong("id"),         rs.getString("idNumber"),
-                    rs.getString("password"), rs.getString("name"),
-                    rs.getString("grade"),    rs.getLong("tbl_company_id"));
-            rs.close();
+            if(rs.next()){
+                user = new User(
+                        rs.getLong("id"),         rs.getString("idNumber"),
+                        rs.getString("password"), rs.getString("name"),
+                        rs.getString("grade"),    rs.getLong("tbl_company_id"));
+                rs.close();
+                return user;
+            }
+
             return user;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            rs.close();
         }
 
-        rs.close();
-        return null;
     }
 
     public boolean insertUser(User user) throws SQLException {
-        sql = "insert into tbl_user values(null, ?, ?, ?, ?, ?)";
-        ps = dbCon.getConn().prepareStatement(sql);
-        ps.setString(1, user.getIdNumber());
-        ps.setString(2, user.getPassword());
-        ps.setString(3, user.getName());
-        ps.setString(4, user.getGrade());
-        ps.setLong(5, user.getTblCompanyId());
-        updateCount = ps.executeUpdate();
+        try{
+            sql = "insert into tbl_user values(null, ?, ?, ?, ?, ?)";
+            ps = dbCon.getConn().prepareStatement(sql);
+            ps.setString(1, user.getIdNumber());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getName());
+            ps.setString(4, user.getGrade());
+            ps.setLong(5, user.getTblCompanyId());
+            updateCount = ps.executeUpdate();
 
-        return updateCount == 1;
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }finally {
+            ps.close();
+        }
+
     }
 
     public boolean updateUser(User user) throws SQLException {
-        sql = "update tbl_user set password = ?, name = ?, grade = ?, tbl_company_id = ? where id = ?";
-        ps = dbCon.getConn().prepareStatement(sql);
-        ps.setString(1, user.getPassword());
-        ps.setString(2, user.getName());
-        ps.setString(3, user.getGrade());
-        ps.setLong(4, user.getTblCompanyId());
-        ps.setLong(5, user.getId());
-        updateCount = ps.executeUpdate();
+        try{
+            sql = "update tbl_user set password = ?, name = ?, grade = ?, tbl_company_id = ? where id = ?";
+            ps = dbCon.getConn().prepareStatement(sql);
+            ps.setString(1, user.getPassword());
+            ps.setString(2, user.getName());
+            ps.setString(3, user.getGrade());
+            ps.setLong(4, user.getTblCompanyId());
+            ps.setLong(5, user.getId());
+            updateCount = ps.executeUpdate();
 
-        return updateCount == 1;
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }finally {
+            ps.close();
+        }
+
     }
 
     public boolean deleteUser(long id) throws SQLException {
-        sql = "delete from tbl_user where id = " + id;
-        ps = dbCon.getConn().prepareStatement(sql);
-        updateCount = ps.executeUpdate();
+        try{
+            sql = "delete from tbl_user where id = " + id;
+            ps = dbCon.getConn().prepareStatement(sql);
+            updateCount = ps.executeUpdate();
 
-        return updateCount == 1;
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }finally {
+            ps.close();
+        }
+
     }
 
     public User selectUserByIdNumber(String idNumber) throws SQLException {
-        sql = "select * from tbl_user where idNumber = " + idNumber;
-        rs = dbCon.getStmt().executeQuery(sql);
+        try{
+            sql = "select * from tbl_user where idNumber = " + idNumber;
+            rs = dbCon.getStmt().executeQuery(sql);
 
-        if(rs.next()){
+            rs.next();
             user = new User(
                     rs.getLong("id"),         rs.getString("idNumber"),
                     rs.getString("password"), rs.getString("name"),
                     rs.getString("grade"),    rs.getLong("tbl_company_id"));
-            rs.close();
+
             return user;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            rs.close();
         }
 
-        rs.close();
-        return null;
     }
 }

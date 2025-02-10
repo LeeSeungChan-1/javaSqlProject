@@ -27,6 +27,18 @@ new FormModel {
 					"font": #Font0
 					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbSelect", true ) )
 				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbUpdate"
+					"text": "수정"
+					"font": &Font1 new java.awt.Font( "맑은 고딕", 0, 16 )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbUpdate", true ) )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "jbDelete"
+					"text": "삭제"
+					"font": #Font1
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "jbDelete", true ) )
+				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "North"
 			} )

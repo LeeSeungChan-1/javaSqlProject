@@ -4,8 +4,11 @@
 
 package gui.materialOrder;
 
+import DAO.MaterialOrder;
+import DAO.MaterialOrderDetail;
 import DAO.MaterialOrderToMaterialOrderDetailToMaterial;
 import DAO.User;
+import controller.MaterialOrderDetailTbl;
 import controller.MaterialOrderTbl;
 
 import java.awt.*;
@@ -26,12 +29,20 @@ public class MaterialOrderSelect extends JFrame {
     private MaterialOrderTbl materialOrderTbl;
     private MaterialOrderToMaterialOrderDetailToMaterial materialOrderToMaterialOrderDetailToMaterial;
     private ArrayList<MaterialOrderToMaterialOrderDetailToMaterial> materialOrderToMaterialOrderDetailToMaterials;
+    private MaterialOrderDetail materialOrderDetail;
+    private ArrayList<MaterialOrderDetail> materialOrderDetails;
+    private MaterialOrderDetailTbl materialOrderDetailTbl;
+    private MaterialOrder materialOrder;
+
+
     public MaterialOrderSelect(User user) throws SQLException {
         initComponents();
         
         this.user = user;
         this.materialOrderTbl = new MaterialOrderTbl();
         this.materialOrderToMaterialOrderDetailToMaterials = new ArrayList();
+        this.materialOrderDetails = new ArrayList();
+        this.materialOrderDetailTbl = new MaterialOrderDetailTbl();
 
         if(this.user.getTblCompanyId() == 1){
             this.dept = "자재";
@@ -44,7 +55,10 @@ public class MaterialOrderSelect extends JFrame {
         this.dtModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                if(column != 4){
+                    return false;    
+                }
+                return true;
             }
         };
 
@@ -62,6 +76,7 @@ public class MaterialOrderSelect extends JFrame {
 
     private void jbSelect(ActionEvent e) throws SQLException {
         // TODO add your code here
+        materialOrderToMaterialOrderDetailToMaterials = null;
         orderNumber = jtfSelect.getText().trim();
         if(orderNumber.equals("")){
             JOptionPane.showMessageDialog(null, "발주번호를 입력하세요.");
@@ -87,7 +102,66 @@ public class MaterialOrderSelect extends JFrame {
 
 
     }
-    
+
+    private void jbUpdate(ActionEvent e) throws SQLException {
+        // TODO add your code here
+        if(JOptionPane.showConfirmDialog(null, "수정하시겠습니까?", "수정", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            materialOrderDetails.clear();
+            for(int i = 0; i < materialOrderToMaterialOrderDetailToMaterials.size(); i++){
+                // 각행에 입력받은 발주수량으로 업데이트
+                materialOrderToMaterialOrderDetailToMaterials.get(i).setAmount(Integer.parseInt(String.valueOf( dtModel.getValueAt(i, 4))));
+                // 객체생성
+                materialOrderDetail = new MaterialOrderDetail(
+                        materialOrderToMaterialOrderDetailToMaterials.get(i).getTblMaterialOrderDetailId(),
+                        materialOrderToMaterialOrderDetailToMaterials.get(i).getOrderNumberDetail(),
+                        materialOrderToMaterialOrderDetailToMaterials.get(i).getAmount(),
+                        materialOrderToMaterialOrderDetailToMaterials.get(i).getTblMaterialId(),
+                        materialOrderToMaterialOrderDetailToMaterials.get(i).getId()
+                );
+                materialOrderDetails.add(materialOrderDetail);
+            }
+            if(materialOrderDetailTbl.updateAll(materialOrderDetails)){
+                JOptionPane.showMessageDialog(null, "수정성공");
+            }else{
+                JOptionPane.showMessageDialog(null, "수정실패");
+            }
+        }
+        
+    }
+
+    private void jbDelete(ActionEvent e) throws SQLException {
+        // TODO add your code here
+        if(JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            materialOrderDetails.clear();
+            for(int i = 0; i < materialOrderToMaterialOrderDetailToMaterials.size(); i++){
+                // 객체생성
+                materialOrderDetail = new MaterialOrderDetail(
+                        materialOrderToMaterialOrderDetailToMaterials.get(i).getTblMaterialOrderDetailId(),
+                        materialOrderToMaterialOrderDetailToMaterials.get(i).getOrderNumberDetail(),
+                        materialOrderToMaterialOrderDetailToMaterials.get(i).getAmount(),
+                        materialOrderToMaterialOrderDetailToMaterials.get(i).getTblMaterialId(),
+                        materialOrderToMaterialOrderDetailToMaterials.get(i).getId()
+                );
+                materialOrderDetails.add(materialOrderDetail);
+            }
+            // 하위 테이블 먼저 삭제
+            if(materialOrderDetailTbl.deleteAll(materialOrderDetails)){
+                materialOrder = new MaterialOrder(
+                        materialOrderToMaterialOrderDetailToMaterials.get(0).getId(), materialOrderToMaterialOrderDetailToMaterials.get(0).getOrderNumber(),
+                        materialOrderToMaterialOrderDetailToMaterials.get(0).getOrderDate(), materialOrderToMaterialOrderDetailToMaterials.get(0).getOrderer()
+                );
+                // 상위 테이블 삭제
+                if(materialOrderTbl.deleteMaterialOrder(materialOrder)){
+                    JOptionPane.showMessageDialog(null, "삭제성공");
+                }else{
+                    JOptionPane.showMessageDialog(null, "삭제실패");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "삭제실패");
+            }
+        }
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -97,6 +171,8 @@ public class MaterialOrderSelect extends JFrame {
         jlTop = new JLabel();
         jtfSelect = new JTextField();
         jbSelect = new JButton();
+        jbUpdate = new JButton();
+        jbDelete = new JButton();
         jpMain = new JPanel();
         jspMain = new JScrollPane();
         jtMain = new JTable();
@@ -111,13 +187,14 @@ public class MaterialOrderSelect extends JFrame {
 
             //======== jpTop ========
             {
-                jpTop.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax
-                . swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing
-                . border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .
-                Font ("D\u0069alog" ,java .awt .Font .BOLD ,12 ), java. awt. Color. red
-                ) ,jpTop. getBorder( )) ); jpTop. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override
-                public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062order" .equals (e .getPropertyName (
-                ) )) throw new RuntimeException( ); }} );
+                jpTop.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (
+                new javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion"
+                , javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM
+                , new java .awt .Font ("D\u0069alog" ,java .awt .Font .BOLD ,12 )
+                , java. awt. Color. red) ,jpTop. getBorder( )) ); jpTop. addPropertyChangeListener (
+                new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
+                ) {if ("\u0062order" .equals (e .getPropertyName () )) throw new RuntimeException( )
+                ; }} );
                 jpTop.setLayout(new GridLayout(1, 1));
 
                 //---- jlTop ----
@@ -135,6 +212,24 @@ jbSelect(e);} catch (SQLException ex) {
     throw new RuntimeException(ex);
 }});
                 jpTop.add(jbSelect);
+
+                //---- jbUpdate ----
+                jbUpdate.setText("\uc218\uc815");
+                jbUpdate.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 16));
+                jbUpdate.addActionListener(e -> {try {
+jbUpdate(e);} catch (SQLException ex) {
+    throw new RuntimeException(ex);
+}});
+                jpTop.add(jbUpdate);
+
+                //---- jbDelete ----
+                jbDelete.setText("\uc0ad\uc81c");
+                jbDelete.setFont(new Font("\ub9d1\uc740 \uace0\ub515", Font.PLAIN, 16));
+                jbDelete.addActionListener(e -> {try {
+jbDelete(e);} catch (SQLException ex) {
+    throw new RuntimeException(ex);
+}});
+                jpTop.add(jbDelete);
             }
             jfMainContentPane.add(jpTop, BorderLayout.NORTH);
 
@@ -165,6 +260,8 @@ jbSelect(e);} catch (SQLException ex) {
     private JLabel jlTop;
     private JTextField jtfSelect;
     private JButton jbSelect;
+    private JButton jbUpdate;
+    private JButton jbDelete;
     private JPanel jpMain;
     private JScrollPane jspMain;
     private JTable jtMain;

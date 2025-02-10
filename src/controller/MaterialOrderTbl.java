@@ -32,90 +32,135 @@ public class MaterialOrderTbl {
         this.materialOrderToMaterialOrderDetailToMaterials = new ArrayList<>();
     }
 
-    public ArrayList<MaterialOrderTbl> selectAll() throws SQLException {
-        sql = "select * from tbl_materialOrder";
-        return null;
-    }
-
-    public ArrayList<MaterialOrder> selectByDate(String date) throws SQLException {
-        sql = "select * from tbl_materialOrder where orderDate = ?";
-        ps = dbCon.getConn().prepareStatement(sql);
-        ps.setString(1, date);
-        rs = ps.executeQuery();
-        while (rs.next()) {
-            materialOrder = new MaterialOrder(
-                    rs.getLong("id"), rs.getString("orderNumber"), rs.getString("orderDate"), rs.getString("orderer")
-            );
-            materialOders.add(materialOrder);
+    public String selectByDateMaxOrderNumber(String date) throws SQLException {
+        try{
+            String maxOrderNumber = "";
+            sql = "select ifnull(max(orderNumber), 0) maxOrderNumber from tbl_materialOrder where orderDate = ?";
+            ps = dbCon.getConn().prepareStatement(sql);
+            ps.setString(1, date);
+            rs = ps.executeQuery();
+            rs.next();
+            maxOrderNumber = rs.getString("maxOrderNumber");
+            return maxOrderNumber;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            rs.close();
+            ps.close();
         }
-        return materialOders;
+
     }
 
     public MaterialOrder insert(MaterialOrder materialOrder) throws SQLException {
-        // 발주 테이블 insert
-        sql = "insert into tbl_materialOrder values(null, ?, ?, ?)";
-        ps = conn.prepareStatement(sql);
-        ps.setString(1, materialOrder.getOrderNumber());
-        ps.setString(2, materialOrder.getOrderDate());
-        ps.setString(3, materialOrder.getOrderer());
-        ps.executeUpdate();
+        try{
+            // 발주 테이블 insert
+            sql = "insert into tbl_materialOrder values(null, ?, ?, ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, materialOrder.getOrderNumber());
+            ps.setString(2, materialOrder.getOrderDate());
+            ps.setString(3, materialOrder.getOrderer());
+            ps.executeUpdate();
 
-        // insert한 테이블 id 가져오기
-        sql = "select id from tbl_materialOrder where orderNumber = ?";
-        ps = conn.prepareStatement(sql);
-        ps.setString(1, materialOrder.getOrderNumber());
-        rs = ps.executeQuery();
+            // insert한 테이블 id 가져오기
+            sql = "select id from tbl_materialOrder where orderNumber = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, materialOrder.getOrderNumber());
+            rs = ps.executeQuery();
 
-        if (!rs.next()) {
+            if (!rs.next()) {
+                return null;
+            }
+
+            materialOrder.setId(rs.getLong("id"));
+            return materialOrder;
+        }catch (Exception e){
+            e.printStackTrace();
             return null;
+        }finally {
+            rs.close();
+            ps.close();
         }
 
-        materialOrder.setId(rs.getLong("id"));
-
-        return materialOrder;
     }
 
     public ArrayList<MaterialOrderToMaterialOrderDetailToMaterial> selectByOrderNumber(String orderNumber) throws SQLException {
-        sql = "select a.id idA, a.orderNumber, a.orderDate, a.orderer, b.id idB, b.orderNumberDetail, b.amount, b.tbl_material_id, c.materialCode, c.materialName" +
-              "  from tbl_materialOrder a, tbl_materialOrderDetail b, tbl_material c" +
-              " where a.orderNumber = ?" +
-              "   and a.id = b.tbl_materialOrder_id" +
-              "   and b.tbl_material_id = c.id";
-        ps = conn.prepareStatement(sql);
-        ps.setString(1, orderNumber);
-        rs = ps.executeQuery();
+        try{
+            materialOrderToMaterialOrderDetailToMaterials.clear();
 
-        materialOrderToMaterialOrderDetailToMaterials.clear();
-        while(rs.next()) {
-            materialOrderToMaterialOrderDetailToMaterial = new MaterialOrderToMaterialOrderDetailToMaterial(
-                    rs.getLong("idA"),       rs.getString("orderNumber"),   rs.getString("orderDate"),
-                    rs.getString("orderer"), rs.getLong("idB"),             rs.getString("orderNumberDetail"),
-                    rs.getInt("amount"),     rs.getLong("tbl_material_id"), rs.getString("materialCode"),
-                    rs.getString("materialName")
-            );
-            materialOrderToMaterialOrderDetailToMaterials.add(materialOrderToMaterialOrderDetailToMaterial);
+            sql = "select a.id idA, a.orderNumber, a.orderDate, a.orderer, b.id idB, b.orderNumberDetail, b.amount, b.tbl_material_id, c.materialCode, c.materialName" +
+                    "  from tbl_materialOrder a, tbl_materialOrderDetail b, tbl_material c" +
+                    " where a.orderNumber = ?" +
+                    "   and a.id = b.tbl_materialOrder_id" +
+                    "   and b.tbl_material_id = c.id";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, orderNumber);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                materialOrderToMaterialOrderDetailToMaterial = new MaterialOrderToMaterialOrderDetailToMaterial(
+                        rs.getLong("idA"),       rs.getString("orderNumber"),   rs.getString("orderDate"),
+                        rs.getString("orderer"), rs.getLong("idB"),             rs.getString("orderNumberDetail"),
+                        rs.getInt("amount"),     rs.getLong("tbl_material_id"), rs.getString("materialCode"),
+                        rs.getString("materialName")
+                );
+                materialOrderToMaterialOrderDetailToMaterials.add(materialOrderToMaterialOrderDetailToMaterial);
+            }
+            return materialOrderToMaterialOrderDetailToMaterials;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            rs.close();
+            ps.close();
         }
-        return materialOrderToMaterialOrderDetailToMaterials;
+
     }
 
     public ArrayList<MaterialOrderToMaterialOrderDetailToMaterial> selectAllToMaterialOrderDetailToMaterial() throws SQLException {
-        sql = "select a.id idA, a.orderNumber, a.orderDate, a.orderer, b.id idB, b.orderNumberDetail, b.amount, b.tbl_material_id, c.materialCode, c.materialName" +
-                "  from tbl_materialOrder a, tbl_materialOrderDetail b, tbl_material c" +
-                " where a.id = b.tbl_materialOrder_id" +
-                "   and b.tbl_material_id = c.id";
-        ps = conn.prepareStatement(sql);
-        rs = ps.executeQuery();
+        try{
+            sql = "select a.id idA, a.orderNumber, a.orderDate, a.orderer, b.id idB, b.orderNumberDetail, b.amount, b.tbl_material_id, c.materialCode, c.materialName" +
+                    "  from tbl_materialOrder a, tbl_materialOrderDetail b, tbl_material c" +
+                    " where a.id = b.tbl_materialOrder_id" +
+                    "   and b.tbl_material_id = c.id";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
 
-        materialOrderToMaterialOrderDetailToMaterials.clear();
-        while(rs.next()) {
-            materialOrderToMaterialOrderDetailToMaterial = new MaterialOrderToMaterialOrderDetailToMaterial(
-                    rs.getLong("idA"),       rs.getString("orderNumber"),   rs.getString("orderDate"),
-                    rs.getString("orderer"), rs.getLong("idB"),             rs.getString("orderNumberDetail"),
-                    rs.getInt("amount"),     rs.getLong("tbl_material_id"), rs.getString("materialCode"),
-                    rs.getString("materialName")
-            );
-            materialOrderToMaterialOrderDetailToMaterials.add(materialOrderToMaterialOrderDetailToMaterial);
+            materialOrderToMaterialOrderDetailToMaterials.clear();
+            while(rs.next()) {
+                materialOrderToMaterialOrderDetailToMaterial = new MaterialOrderToMaterialOrderDetailToMaterial(
+                        rs.getLong("idA"),       rs.getString("orderNumber"),   rs.getString("orderDate"),
+                        rs.getString("orderer"), rs.getLong("idB"),             rs.getString("orderNumberDetail"),
+                        rs.getInt("amount"),     rs.getLong("tbl_material_id"), rs.getString("materialCode"),
+                        rs.getString("materialName")
+                );
+                materialOrderToMaterialOrderDetailToMaterials.add(materialOrderToMaterialOrderDetailToMaterial);
+            }
+            return materialOrderToMaterialOrderDetailToMaterials;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            rs.close();
+            ps.close();
         }
-        return materialOrderToMaterialOrderDetailToMaterials;
+
+    }
+
+    public boolean deleteMaterialOrder(MaterialOrder materialOrder) throws SQLException {
+        try{
+            sql = "delete from tbl_materialOrder where id = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, materialOrder.getId());
+            ps.executeUpdate();
+            return true;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }finally {
+            ps.close();
+        }
+
+
     }
 }

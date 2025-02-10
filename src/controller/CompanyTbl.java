@@ -18,14 +18,20 @@ public class CompanyTbl {
     }
 
     public ArrayList<ComboItem> selectCompanyAll() throws SQLException {
-        sql = "SELECT id, companyName FROM tbl_company";
-        rs = dbCon.getStmt().executeQuery(sql);
+        try{
+            sql = "SELECT id, companyName FROM tbl_company";
+            rs = dbCon.getStmt().executeQuery(sql);
 
-        while (rs.next()) {
-            comboItems.add(new ComboItem(rs.getLong("id"), rs.getString("companyName")));
+            while (rs.next()) {
+                comboItems.add(new ComboItem(rs.getLong("id"), rs.getString("companyName")));
+            }
+            return comboItems;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            rs.close();
         }
 
-        rs.close();
-        return comboItems;
     }
 }

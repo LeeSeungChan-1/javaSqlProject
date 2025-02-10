@@ -154,9 +154,7 @@ public class MaterialOrderInsert extends JFrame {
             String formattedDate = dateFormat.format(date);
             String formattedDateSt = dateFormatSt.format(date);
 
-            materialOrders = materialOrderTbl.selectByDate(formattedDate);
-            String orderNumber = String.format("%3s", Integer.toString(materialOrders.size() + 1)).replace(" ", "0");
-            orderNumber = formattedDateSt + orderNumber;
+            String orderNumber = Integer.toString(Integer.parseInt(materialOrderTbl.selectByDateMaxOrderNumber(formattedDate)) + 1);
 
             materialOrder = new MaterialOrder(
                     orderNumber, formattedDate, user.getIdNumber()
@@ -220,11 +218,13 @@ public class MaterialOrderInsert extends JFrame {
 
             //======== jpTop ========
             {
-                jpTop.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder(
-                0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder
-                . BOTTOM, new java .awt .Font ("D\u0069alog" ,java .awt .Font .BOLD ,12 ), java. awt. Color.
-                red) ,jpTop. getBorder( )) ); jpTop. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .
-                beans .PropertyChangeEvent e) {if ("\u0062order" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+                jpTop.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing
+                .border.EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder
+                .CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.
+                awt.Font.BOLD,12),java.awt.Color.red),jpTop. getBorder()))
+                ;jpTop. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
+                ){if("bord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}})
+                ;
                 jpTop.setLayout(new GridLayout(1, 1));
 
                 //---- jlTop ----
