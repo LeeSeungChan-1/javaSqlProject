@@ -131,6 +131,8 @@ public class MaterialOrderInsert extends JFrame {
         // TODO add your code here
         // 테이블 데이터 개수 확인
         int count = 0;
+        String orderNumber = "";
+        materialOrderDetails.clear();
         for(int i = 0; i < 10; i++){
             if(dtModel.getValueAt(i, 0) != null && dtModel.getValueAt(i, 1) != null && dtModel.getValueAt(i, 2) != null){
                 count++;
@@ -154,7 +156,14 @@ public class MaterialOrderInsert extends JFrame {
             String formattedDate = dateFormat.format(date);
             String formattedDateSt = dateFormatSt.format(date);
 
-            String orderNumber = Integer.toString(Integer.parseInt(materialOrderTbl.selectByDateMaxOrderNumber(formattedDate)) + 1);
+            orderNumber = materialOrderTbl.selectByDateMaxOrderNumber(formattedDate);
+            System.out.println(orderNumber);
+
+            if(orderNumber.equals("0")){
+                orderNumber = formattedDateSt + "001";
+            }
+
+            System.out.println(orderNumber);
 
             materialOrder = new MaterialOrder(
                     orderNumber, formattedDate, user.getIdNumber()

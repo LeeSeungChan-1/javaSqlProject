@@ -34,8 +34,8 @@ public class MaterialOrderTbl {
 
     public String selectByDateMaxOrderNumber(String date) throws SQLException {
         try{
-            String maxOrderNumber = "";
-            sql = "select ifnull(max(orderNumber), 0) maxOrderNumber from tbl_materialOrder where orderDate = ?";
+            String maxOrderNumber;
+            sql = "select ifnull(max(orderNumber)+1, '0') maxOrderNumber from tbl_materialOrder where orderDate = ?";
             ps = dbCon.getConn().prepareStatement(sql);
             ps.setString(1, date);
             rs = ps.executeQuery();
